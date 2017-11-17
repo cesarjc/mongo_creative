@@ -1,6 +1,6 @@
 $(document).ready(function(){
   $("#sendMessage").click(function(){
-      var myobj = {From:$("#fromNumber").val(),To:$("#toNumber").val(),Message:$("#messageToSend").val()};
+      var myobj = {from:$("#fromNumber").val(),to:$("#toNumber").val(),message:$("#messageToSend").val()};
       jobj = JSON.stringify(myobj);
       console.log(jobj);
       $("#json").text(jobj);
@@ -11,22 +11,25 @@ type: "POST",
 data: jobj,
 contentType: "application/json; charset=utf-8",
 success: function(data,textStatus) {
-    $("#done").html(textStatus);
+    $("#done").html("Message Sent!");
     getMessages();
 }
 })
   });
 
 getMessages = function(){
-    $.getJSON('message', function(data) {
+	var geturl = 'message?from='+$("#fromNumber").val()+'&to='+$('#toNumber').val();
+    $.getJSON(geturl, function(data) {
       console.log(data);
       var everything = "<ul>";
       for(var message in data) {
         com = data[message];
-        everything += "<li> From: " + com.From + " -- Message: " + com.Message + "</li>";
+	console.log("here:");
+console.log(com);
+        everything += "<li> From: " + com.from + " -- Message: " + com.message + "</li>";
       }
       everything += "</ul>";
-      $("#comments").html(everything);
+      $("#messages").html(everything);
     })
 
 };
