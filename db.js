@@ -9,9 +9,10 @@ mongoose.connect('mongodb://localhost/messenger', { useMongoClient: true, promis
 
 const Message = mongoose.model('Message', mongoose.Schema({ from: String, message: String, to: String }));
 const create = (messageInfo) => new Message(messageInfo).save();
+const del = (query) => Message.remove(query).exec();
 
 const read = (query) => new Promise((resolve, reject) => {
   Message.find(query, (error, messages) => error ? reject(error) : resolve(messages));
 });
 
-module.exports = { create, read };
+module.exports = { create, read, del };
