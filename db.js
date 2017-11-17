@@ -12,7 +12,8 @@ const create = (messageInfo) => new Message(messageInfo).save();
 const del = (query) => Message.remove(query).exec();
 
 const read = (query) => new Promise((resolve, reject) => {
-  Message.find(query, (error, messages) => error ? reject(error) : resolve(messages));
+  const recievedMessagesQuery = { from: query.to, to: query.from };
+  Message.find({ $or: [query, recievedMessagesQuery] }, (error, messages) => error ? reject(error) : resolve(messages));
 });
 
 module.exports = { create, read, del };
