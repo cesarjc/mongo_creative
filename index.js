@@ -19,7 +19,7 @@ app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'public/index.html'
 
 app.post('/message', (req, res) => {
   db.create(req.body)
-    .then(() => res.sendStatus(204))
+    .then(() => res.sendStatus(200))
     .catch((error) => handleError(error, res));
 });
 
@@ -31,7 +31,7 @@ app.get('/message', (req, res) => {
 
 app.delete('/message', (req, res) => {
   db.del(req.query)
-    .then(() => res.sendStatus(204))
+    .then(() => res.sendStatus(200))
     .catch((error) => handleError(error, res));
 });
 
